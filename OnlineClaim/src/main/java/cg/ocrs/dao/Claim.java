@@ -1,10 +1,10 @@
-package repository;
-import com.cg.model.ClaimAdjuster;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+package repositry;
 
-import javax.persistence.EntityNotFoundException;
+import java.sql.*;
+import java.sql.SQLException;
+
+
+import com.cg.model.ClaimAdjuster;
 
 public class Claim implements IClaim{
 	Connection con;
@@ -12,48 +12,40 @@ public class Claim implements IClaim{
 	ResultSet rsUser;
 	public Claim() {
 		try {
-			con=ConnectionUtility.getConnection();
+			con=Connectionutil.getConnection();
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	@Override
-	public ClaimAdjuster addUser(ClaimAdjuster user) throws SQLException {
+	public ClaimAdjuster addClaim(ClaimAdjuster cl) throws SQLException {
 		// TODO Auto-generated method stub
-		psmt=con.prepareStatement("insert into claim values(?,?,?)");
-		psmt.setInt(1, user.getUserId());
-		psmt.setInt(2, user.getClaimId());
-		psmt.setClaimList(3, user.getClaimList());
-		psmt.executeUpdate();
-		return user;
+		psmt=con.prepareStatement("insert into Claim values(?,?,?,?,?,?,?,?,?)");
+		psmt.setInt(1,cl.getClaimId());
+		psmt.setString(2,cl.getClaimReason());
+		psmt.setString(3, cl.getClaimLocation());
+		psmt.setString(4,cl.getClaimState());
+		psmt.setString(5, cl.getClaimCity());
+		psmt.setInt(6, cl.getClaimZip());
+		psmt.setString(7,cl.getClaimList().getClaimType());
+		psmt.setInt(8,cl.getClaimList().getPolicyNumber());
+		psmt.setInt(9, cl.getClaimList().getClaimNumber());
+		return cl;
 	}
 	@Override
-	public ClaimAdjuster getUser(int userId) throws SQLException {
-		// TODO Auto-generated method stub
+	public ClaimAdjuster getClaim(int claimId) throws SQLException {
 		psmt=con.prepareStatement("select * from claim where id=?");
-		psmt.setInt(1, userId);
+		psmt.setInt(1, claimId);
 		rsUser=psmt.executeQuery();
-		ClaimAdjuster ur=new ClaimAdjuster();
-		ur.setUserId(rsUser.getInt("UserId"));
-		ur.setClaimId(rsUser.getInt("ClaimId"));
-		return ur;
-	}
-	@Override
-	public List<ClaimAdjuster> getAllUsers() throws SQLException {
+		ClaimAdjuster ca=new ClaimAdjuster();
+		ca.setClaimId(rsUser.getInt("claimId"));
+		ca.setClaimReason(rsUser.getString("claimReason"));
+		ca.setClaimLocation(rsUser.getString("Location"));
+		ca.setClaimCity(rsUser.getString("City"));
+		ca.setClaimState(rsUser.getString("State"));
+		ca.setClaimZip(rsUser.getInt("Zip"));
 		// TODO Auto-generated method stub
-psmt=con.prepareStatement("select * from claim");
-
-		rsUser=psmt.executeQuery();
-
-		List<ClaimAdjuster> users=new ArrayList<>();
-		while(rsUser.next()) {
-			ClaimAdjuster us=new ClaimAdjuster();
-		us.setUserId(rsUser.getInt("UserId"));
-		us.setClaimId(rsUser.getInt("ClaimId"));
-		users.add(us);
-		}
-		return users;
+		return ca;
 	}
-
 }
