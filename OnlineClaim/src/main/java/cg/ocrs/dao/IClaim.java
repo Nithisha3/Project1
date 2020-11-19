@@ -1,14 +1,13 @@
-package repository;
+package repositry;
 
 import java.sql.SQLException;
-import java.util.List;
+
 
 import com.cg.model.ClaimAdjuster;
 
 public interface IClaim {
-	public ClaimAdjuster addUser(ClaimAdjuster user)throws SQLException;
-	public ClaimAdjuster getUser(int userId)throws SQLException;
-	public List<ClaimAdjuster> getAllUsers()throws SQLException;
+		public ClaimAdjuster addClaim(ClaimAdjuster claimList)throws SQLException;
+		public ClaimAdjuster getClaim(int claimId)throws SQLException;
+		
 
-
-}
+	}
