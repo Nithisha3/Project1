@@ -1,6 +1,12 @@
 package com.cg.model;
 
 	public class ClaimAdjuster {
+		@Override
+		public String toString() {
+			return "ClaimAdjuster: claimId=" + claimId + ", claimReason=" + claimReason + ", claimLocation="
+					+ claimLocation + ", claimCity=" + claimCity + ", claimState=" + claimState + ", claimZip="
+					+ claimZip +"ClaimType=" +claimType;
+		}
 		private int userId;
 		private int claimId;
 		private String claimReason;
@@ -8,8 +14,22 @@ package com.cg.model;
 		private String claimCity;
 		private String claimState;
 		private int claimZip;
-		private Claimlist claimList;
-		
+		private String claimType;
+	
+		public ClaimAdjuster() {
+			super();
+		}
+		public ClaimAdjuster(int claimId, String claimReason, String claimLocation, String claimState, String claimCity,int claimZip,String claimType) {
+			super();
+			this.claimId=claimId;
+			this.claimReason=claimReason;
+			this.claimLocation=claimLocation;
+			this.claimState=claimState;
+			this.claimCity=claimCity;
+			this.claimZip=claimZip;
+			this.claimType=claimType;
+			
+		}
 	
 		public int getUserId() {
 			return userId;
@@ -22,12 +42,6 @@ package com.cg.model;
 		}
 		public void setClaimId(int claimId) {
 			this.claimId = claimId;
-		}
-		public Claimlist getClaimList() {
-			return claimList;
-		}
-		public void setClaimList(Claimlist claimList) {
-			this.claimList = claimList;
 		}
 		public String getClaimReason() {
 			return claimReason;
@@ -59,7 +73,16 @@ package com.cg.model;
 		public int getClaimZip() {
 			return claimZip;
 		}
+		public String getClaimType() {
+			return claimType;
+		}
+		public void setClaimType(String claimType) {
+			this.claimType = claimType;
+		}
 
 		}
+
+
+
 
 
