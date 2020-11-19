@@ -21,7 +21,7 @@ public class Claim implements IClaim{
 	@Override
 	public ClaimAdjuster addUser(ClaimAdjuster user) throws SQLException {
 		// TODO Auto-generated method stub
-		psmt=con.prepareStatement("insert into UserRole values(?,?,?)");
+		psmt=con.prepareStatement("insert into claim values(?,?,?)");
 		psmt.setInt(1, user.getUserId());
 		psmt.setInt(2, user.getClaimId());
 		psmt.setClaimList(3, user.getClaimList());
@@ -31,7 +31,7 @@ public class Claim implements IClaim{
 	@Override
 	public ClaimAdjuster getUser(int userId) throws SQLException {
 		// TODO Auto-generated method stub
-		psmt=con.prepareStatement("select * from ClaimAdjuster where id=?");
+		psmt=con.prepareStatement("select * from claim where id=?");
 		psmt.setInt(1, userId);
 		rsUser=psmt.executeQuery();
 		ClaimAdjuster ur=new ClaimAdjuster();
@@ -42,7 +42,7 @@ public class Claim implements IClaim{
 	@Override
 	public List<ClaimAdjuster> getAllUsers() throws SQLException {
 		// TODO Auto-generated method stub
-psmt=con.prepareStatement("select * from UserRole");
+psmt=con.prepareStatement("select * from claim");
 
 		rsUser=psmt.executeQuery();
 
