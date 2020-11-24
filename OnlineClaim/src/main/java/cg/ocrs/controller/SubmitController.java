@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.cg.model.ClaimAdjuster;
 import com.cg.model.QuestionAndAnswers;
 
 import repositry.Claim;
@@ -54,33 +55,31 @@ IClaim cl;
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 * 
 	 */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String uri=request.getRequestURI();
-		if(uri.contains("/view-student")) {
-			try {
-				viewQuestion(request, response);
-			} catch (SQLException e) {
-				response.sendError(500);
+		HttpSession session = request.getSession();
+		ClaimAdjuster ca = (ClaimAdjuster)session.getAttribute("claim");
+		IClaim claim = new Claim();
+		ArrayList<QuestionAndAnswers> list = (ArrayList<QuestionAndAnswers>)session.getAttribute("QuestionAndAnswers");
+		int weightage = 0;
+		for(QuestionAndAnswers qa : list) {
+			String answer = request.getParameter(qa.getQuestionId()+"");
+			if(qa.getAnswer1().equals(answer)) {
+				weightage += qa.getWeightage1();
 			}
+			else if(qa.getAnswer2().equals(answer)) {
+				weightage += qa.getWeightage2();
+			}
+			else if(qa.getAnswer3().equals(answer)) {
+				weightage += qa.getWeightage3();
+			}
+		}
+		try {
+			
+			claim.addClaim(ca);
+		}catch(SQLException e) {
 			
 		}
     }
-    protected void viewQuestion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
-		String questionName=request.getParameter("value");
-		int questionId=cl.getQuestionName(questionName);
-		ArrayList<QuestionAndAnswers> qa=cl.getQuestionAndAnswers(questionId);
-		HttpSession ssn=request.getSession();
-		ssn.setAttribute("qa", qa);
-		response.sendRedirect("ClaimNumber.jsp");	
-}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String option=request.getParameter("name");
-		if(option.equals("Submit")) {
-			response.sendRedirect("Submit.jsp");
-		}
-
-	}
-
+	
 }
