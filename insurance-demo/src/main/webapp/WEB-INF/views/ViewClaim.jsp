@@ -59,7 +59,7 @@
 						  <table class="table">
 						    <thead>
 						      <tr>
-						        <th>Claim Id</th>
+						        <th>Claim Number</th>
 						        <th>Reason</th>
 						        <th>Accident Location</th>
 						        <th>Accident State</th>

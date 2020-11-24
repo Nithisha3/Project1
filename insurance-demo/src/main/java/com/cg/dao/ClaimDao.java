@@ -32,15 +32,16 @@ public class ClaimDao extends Dao{
 			try {
 				
 				System.out.println(claim);
-				psmt=con.prepareStatement("insert into claim values(?,?,?,?,?,?,?,?)");
-				psmt.setInt(1,claim.getClaimNumber());
-				psmt.setString(2,claim.getClaimReason());
-				psmt.setString(3, claim.getaccidentLocationStreet());
-				psmt.setString(4,claim.getAccidentCity());
-				psmt.setString(5, claim.getAccidentState());
-				psmt.setInt(6, claim.getAccidentZip());
-				psmt.setString(7, claim.getClaimType());
-				psmt.setInt(8, claim.getPolicyNumber());
+				psmt=con.prepareStatement("insert into claim values(?,?,?,?,?,?,?,?,?)");
+				psmt.setInt(1,claim.getClaimId());
+				psmt.setInt(2, 0);
+				psmt.setString(3,claim.getClaimReason());
+				psmt.setString(4, claim.getaccidentLocationStreet());
+				psmt.setString(5,claim.getAccidentCity());
+				psmt.setString(6, claim.getAccidentState());
+				psmt.setInt(7, claim.getAccidentZip());
+				psmt.setString(8, claim.getClaimType());
+				psmt.setInt(9, claim.getPolicyNumber());
 				
 				int rows = psmt.executeUpdate();
 				if(rows != 0) {
@@ -48,6 +49,37 @@ public class ClaimDao extends Dao{
 					
 				}
 				
+			} 
+			catch(SQLIntegrityConstraintViolationException
+					 s) {
+				
+			} catch (SQLException se) {
+				se.printStackTrace();
+				
+			} finally {
+				closeResultSet(rs);
+				closeStatement(psmt);
+				closeConnection(con);
+			}
+			return status;
+		}
+		
+		
+		public boolean updateClaim(int claimId, int claimNumber) {
+		boolean status = false;
+			
+			Connection con = openConnection();
+			Statement psmt = null;
+			ResultSet rs = null;
+			
+			try {
+				
+				String sql = "UPDATE CLAIM SET CLAIMNUMBER = '" + claimNumber + "' WHERE CLAIMID = '" + claimId + "'";
+				psmt=con.prepareStatement(sql);
+				rs = psmt.executeQuery(sql);
+				if(rs.next()) {
+					status = true;		
+				}		
 			} 
 			catch(SQLIntegrityConstraintViolationException
 					 s) {
@@ -74,11 +106,12 @@ public class ClaimDao extends Dao{
 					
 					try {
 						
-						psmt=con.prepareStatement("insert into CLAIMQUESTIONANDANSWERS values(?,?,?)");
+						psmt=con.prepareStatement("insert into CLAIMQUESTIONANDANSWERS values(?,?,?,?)");
 						for(ClaimQuestionsAndAnswers entry :claimQuestionsAndAnswersList ) {
 							psmt.setInt(1,entry.getQuestionId());
 							psmt.setInt(2,entry.getAnswerId());
-							psmt.setInt(3,entry.getClaimNumber());
+							psmt.setInt(4,entry.getClaimId());
+							psmt.setInt(3, entry.getWeightage());
 							
 							psmt.addBatch();
 						}
@@ -105,8 +138,6 @@ public class ClaimDao extends Dao{
 					}
 					return status;
 				}
-		
-		
 
 						//METHOD USED TO VIEW  Claim .
 						public Claim viewClaimDetailsForInsuredAndHandler(int claimId, String userName) {
@@ -121,20 +152,21 @@ public class ClaimDao extends Dao{
 								
 								stmt = con.createStatement();
 								
-								String sql = "SELECT * FROM CLAIM WHERE CLAIMNUMBER ='" + claimId +  "'" ;
+								String sql = "SELECT * FROM CLAIM WHERE CLAIMID ='" + claimId +  "'" ;
 								rs = stmt.executeQuery(sql);
 								if(rs.next()) {
-									int policyNo = rs.getInt(8);
+									int policyNo = rs.getInt(9);
 									if(checkValidClaimOrNot(policyNo, userName)) {
 										claim = new Claim();
-										claim.setClaimNumber(rs.getInt(1));
-										claim.setClaimReason(rs.getString(2));
-										claim.setaccidentLocationStreet(rs.getString(3));
-										claim.setAccidentCity(rs.getString(4));
-										claim.setAccidentState(rs.getString(5));
-										claim.setAccidentZip(rs.getInt(6));
-										claim.setClaimType(rs.getString(7));
-										claim.setPolicyNumber(rs.getInt(8));
+										claim.setClaimId(rs.getInt(1));
+										claim.setClaimNumber(rs.getInt(2));
+										claim.setClaimReason(rs.getString(3));
+										claim.setaccidentLocationStreet(rs.getString(4));
+										claim.setAccidentCity(rs.getString(5));
+										claim.setAccidentState(rs.getString(6));
+										claim.setAccidentZip(rs.getInt(7));
+										claim.setClaimType(rs.getString(8));
+										claim.setPolicyNumber(rs.getInt(9));
 										
 										return claim;
 									}
@@ -210,18 +242,19 @@ public class ClaimDao extends Dao{
 						
 						stmt = con.createStatement();
 						
-						String sql = "SELECT * FROM CLAIM WHERE CLAIMNUMBER ='" + claimId +  "'" ;
+						String sql = "SELECT * FROM CLAIM WHERE CLAIMID ='" + claimId +  "'" ;
 						rs = stmt.executeQuery(sql);
 						if(rs.next()) {
-								claim = new Claim();
-								claim.setClaimNumber(rs.getInt(1));
-								claim.setClaimReason(rs.getString(2));
-								claim.setaccidentLocationStreet(rs.getString(3));
-								claim.setAccidentCity(rs.getString(4));
-								claim.setAccidentState(rs.getString(5));
-								claim.setAccidentZip(rs.getInt(6));
-								claim.setClaimType(rs.getString(7));
-								claim.setPolicyNumber(rs.getInt(8));
+							claim = new Claim();
+							claim.setClaimId(rs.getInt(1));
+							claim.setClaimNumber(rs.getInt(2));
+							claim.setClaimReason(rs.getString(3));
+							claim.setaccidentLocationStreet(rs.getString(4));
+							claim.setAccidentCity(rs.getString(5));
+							claim.setAccidentState(rs.getString(6));
+							claim.setAccidentZip(rs.getInt(7));
+							claim.setClaimType(rs.getString(8));
+							claim.setPolicyNumber(rs.getInt(9));
 								
 								return claim;
 		
@@ -257,7 +290,7 @@ public class ClaimDao extends Dao{
 						
 						stmt = con.createStatement();
 						
-						String sql = "SELECT * FROM CLAIMQUESTIONANDANSWERS WHERE CLAIMNUMBER ='" + claimId +  "'" ;
+						String sql = "SELECT * FROM CLAIMQUESTIONANDANSWERS WHERE CLAIMID ='" + claimId +  "'" ;
 						rs = stmt.executeQuery(sql);
 						while (rs.next()) {
 							int questionId = rs.getInt(1);
@@ -336,10 +369,7 @@ public class ClaimDao extends Dao{
 				answers.setAnswer(rs.getString(2));
 				answers.setWeightage(rs.getInt(3));
 				answers.setQuestionId(rs.getInt(4));
-				
-				
-				
-				
+					
 				}
 				
 			} 	catch(SQLIntegrityConstraintViolationException

@@ -1,6 +1,7 @@
 package com.cg.entity;
 
 public class Claim {
+	private Integer claimId;
 	private Integer claimNumber;
 	private String claimReason;
 	private String accidentLocationStreet;
@@ -14,9 +15,10 @@ public class Claim {
 	public Claim() {
 		
 	}
-	public Claim(Integer claimNumber, String claimReason, String accidentLocationStreet, String accidentCity,
+	public Claim(Integer claimId, Integer claimNumber, String claimReason, String accidentLocationStreet, String accidentCity,
 			String accidentState, Integer accidentZip, String claimType, Integer policyNumber) {
 		super();
+		this.claimId = claimId;
 		this.claimNumber = claimNumber;
 		this.claimReason = claimReason;
 		this.accidentLocationStreet = accidentLocationStreet;
@@ -27,6 +29,13 @@ public class Claim {
 		this.policyNumber = policyNumber;
 	}
 	
+	
+	public Integer getClaimId() {
+		return claimId;
+	}
+	public void setClaimId(Integer claimId) {
+		this.claimId = claimId;
+	}
 	
 	public Integer getClaimNumber() {
 		return claimNumber;
@@ -76,13 +85,15 @@ public class Claim {
 	public void setPolicyNumber(Integer policyNumber) {
 		this.policyNumber = policyNumber;
 	}
-	
 	@Override
 	public String toString() {
-		return "Claim [claimNumber=" + claimNumber + ", claimReason=" + claimReason + ", accidentLocationStreet="
-				+ accidentLocationStreet + ", accidentCity=" + accidentCity + ", accidentState=" + accidentState
-				+ ", accidentZip=" + accidentZip + ", claimType=" + claimType + ", policyNumber=" + policyNumber + "]";
+		return "Claim [claimId=" + claimId + ", claimNumber=" + claimNumber + ", claimReason=" + claimReason
+				+ ", accidentLocationStreet=" + accidentLocationStreet + ", accidentCity=" + accidentCity
+				+ ", accidentState=" + accidentState + ", accidentZip=" + accidentZip + ", claimType=" + claimType
+				+ ", policyNumber=" + policyNumber + "]";
 	}
+	
+	
 	
 	
 

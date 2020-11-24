@@ -3,15 +3,17 @@ package com.cg.entity;
 public class ClaimQuestionsAndAnswers {
 	private int questionId;
 	private int answerId;
-	private int claimNumber;
+	private int claimId;
+	private int weightage;
 	
 	public ClaimQuestionsAndAnswers() {}
 
-	public ClaimQuestionsAndAnswers(int questionId, int answerId, int claimNumber) {
+	public ClaimQuestionsAndAnswers(int questionId, int answerId, int claimId, int weightage) {
 		super();
 		this.questionId = questionId;
 		this.answerId = answerId;
-		this.claimNumber = claimNumber;
+		this.claimId = claimId;
+		this.weightage = weightage;
 	}
 
 	public int getQuestionId() {
@@ -30,20 +32,29 @@ public class ClaimQuestionsAndAnswers {
 		this.answerId = answerId;
 	}
 
-	public int getClaimNumber() {
-		return claimNumber;
+	public int getClaimId() {
+		return claimId;
 	}
 
-	public void setClaimNumber(int claimNumber) {
-		this.claimNumber = claimNumber;
+	public void setClaimId(int claimId) {
+		this.claimId = claimId;
+	}
+	
+	public int getWeightage() {
+		return weightage;
+	}
+
+	public void setWeightage(int weightage) {
+		this.weightage = weightage;
 	}
 
 	@Override
 	public String toString() {
-		return "ClaimQuestionsAndAnswers [questionId=" + questionId + ", answerId=" + answerId + ", claimNumber="
-				+ claimNumber + "]";
+		return "ClaimQuestionsAndAnswers [questionId=" + questionId + ", answerId=" + answerId + ", claimId="
+				+ claimId + ", weightage=" + weightage + "]";
 	}
-	
+
+
 	
 	
 	

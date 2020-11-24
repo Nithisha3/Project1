@@ -22,7 +22,7 @@
 	<body>
 		<%	
 		UserRole user = (UserRole)session.getAttribute("USER_DATA");
-			 Claim claim = (Claim)session.getAttribute("CLAIM_DATA");
+			int claimId = (Integer)session.getAttribute("CLAIM_ID");
 			
 		%>
 			<!-- HEADER STARTS -->
@@ -65,7 +65,7 @@
 		
 			<div class = "container">
 				<div class="row form-header">
-						<p> The claim with claim id <%=claim.getClaimNumber() %> is created. Kindly store the Claim id to check the status and claim details </p>		
+						<p> The claim with claim id <%=claimId %> is created. Kindly store the Claim id to check the status and claim details </p>		
 				</div>
 			</div>
 			<!-- FOOTER STARTS-->

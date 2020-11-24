@@ -11,6 +11,7 @@ import com.cg.entity.Questions;
 public interface ClaimService {
 	
 	boolean createClaim(Claim claim);
+	boolean UpdateClaim(int claimId, int  claimNumber);
 	
 	boolean insertClaimQuestionsAndAnswers(ArrayList<ClaimQuestionsAndAnswers> claimQuestionsAndAnswersList);
 	

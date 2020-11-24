@@ -66,6 +66,9 @@
 					<div class ="col-md-10 ">
 						<input type = "hidden" class="form-control input-lg"  name = "questionLength" value= <%=claimQuestionsAnswers.size() %>>
 					</div>
+					<div class ="col-md-10 ">
+						<input type = "hidden" class="form-control input-lg"  name = "claimId" value= <%=claim.getClaimId() %>>
+					</div>
 				<%
 				 int questionLength = claimQuestionsAnswers.size();
 				 for (Map.Entry<Questions,ArrayList<Answers>> entry : claimQuestionsAnswers.entrySet())   {
@@ -89,10 +92,9 @@
 									for(Answers answers : ansArrayList) {
 									
 									%>
-				
+									
 								    <div class="col-sm-10">
-								        <div class="form-check form-check-inline">
-								            <input class="form-check-input" type="radio" name=<%=questions.getQuestionId() %> id=<%=answers.getAnswerId() %> value=<%= answers.getAnswerId() %>>
+								            <input class="form-check-input" type="radio" name=<%=questions.getQuestionId() %> id=<%=answers.getAnswerId() %> value=<%= answers.getAnswerId()%>:<%=answers.getWeightage() %>>
 								            <label class="form-check-label" for="inlineRadio1"><%= answers.getAnswer() %></label>
 								        </div>
 								      </div>
@@ -109,10 +111,6 @@
 				 </table>
 			 </div>
 		 </div>
-				
-									 <div class ="col-md-10 ">
-												<input type = "hidden" class="form-control input-lg"  name = "claimNo" value= <%=claim.getClaimNumber() %>>
-									</div>
 									<div class=" col-md-11">
 										<p><input type="submit" id="myBtn" name="submit" value="Submit" class = "button1"/></p>
 									</div>

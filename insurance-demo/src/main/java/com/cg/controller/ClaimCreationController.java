@@ -46,7 +46,7 @@ public class ClaimCreationController {
 				
 				
 				Claim claim = new Claim();
-				claim.setClaimNumber(generateClaimnumber());
+				claim.setClaimId(generateClaimId());
 				claim.setClaimReason(claimReason);
 				claim.setaccidentLocationStreet(accidentLocStreet);
 				claim.setAccidentCity(accidentCity);
@@ -73,7 +73,7 @@ public class ClaimCreationController {
 				return claimService.getClaimQuestionAndAnswers();
 			}
 			
-			public int generateClaimnumber() {
+			public int generateClaimId() {
 		        int max = 10000; 
 		        int min = 1; 
 		        int range = max - min + 1; 

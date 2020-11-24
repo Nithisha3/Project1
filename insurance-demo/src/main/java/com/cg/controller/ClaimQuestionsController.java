@@ -33,10 +33,11 @@ public class ClaimQuestionsController {
 	@RequestMapping(value= "/claimQuestion", method = RequestMethod.POST)
 	public String claimCreation(HttpServletRequest request,
 			@RequestParam int questionLength,
-			@RequestParam int claimNo,
+			@RequestParam int claimId,
 			HttpSession ses) {
 		
 		boolean status = false;
+		int totalWeightage = 0;
 		
 	
 		ArrayList<ClaimQuestionsAndAnswers> claimQuestionsAndAnswersList = new ArrayList<ClaimQuestionsAndAnswers>();
@@ -45,11 +46,16 @@ public class ClaimQuestionsController {
 			
 			String paramName = "questionId" + i;
 			String questionId = request.getParameter(paramName);
-			String answerId = request.getParameter(questionId);
+			String answerFromReq = request.getParameter(questionId);
+			String answerId = answerFromReq.split(":")[0];
+			int weightage = Integer.parseInt(answerFromReq.split(":")[1]);
+			
+			totalWeightage = weightage + totalWeightage;
 			
 			claimQuestionsAndAnswers.setQuestionId(Integer.parseInt(questionId));
 			claimQuestionsAndAnswers.setAnswerId(Integer.parseInt(answerId));
-			claimQuestionsAndAnswers.setClaimNumber(claimNo);
+			claimQuestionsAndAnswers.setClaimId(claimId);
+			claimQuestionsAndAnswers.setWeightage(weightage);
 			
 			claimQuestionsAndAnswersList.add(claimQuestionsAndAnswers);
 			
@@ -57,15 +63,15 @@ public class ClaimQuestionsController {
 		
 		status = claimService.insertClaimQuestionsAndAnswers(claimQuestionsAndAnswersList);
 		
+		boolean claimUpdateStatus = claimService.UpdateClaim(claimId, totalWeightage);
 		
-		if(status) {
-			
+		if(status && claimUpdateStatus) {
+			ses.setAttribute("CLAIM_ID", claimId);
 			return "ClaimCreationSuccess";
 		} else {
 			
 			return "ClaimCreationFailure";	
 		}
 	}
-
 
 }

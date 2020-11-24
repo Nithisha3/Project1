@@ -64,4 +64,10 @@ public class ClaimServiceImpl implements ClaimService {
 		return cHashMap;
 	}
 
+	@Override
+	public boolean UpdateClaim(int claimId, int claimNumber) {
+		boolean updateClaimStatus = claimDao.updateClaim(claimId, claimNumber);
+		return updateClaimStatus;
+	}
+
 }
