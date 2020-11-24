@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title></title>
+<title>Profile page</title>
 </head>
 <body>
 <form action="UserController" method="post" align="center">
@@ -23,7 +23,8 @@
 </select>
 <br>
 <br>
-<input type="submit" name="Sign-up"></input>
+<input type="submit" name="name" value="Sign-up"></input>
+<input type="submit" name="name" value="Logout"></input>
 </form>
 </body>
 </html>
