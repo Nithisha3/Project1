@@ -11,18 +11,22 @@
 </head>
 <%
 	HttpSession ssn = request.getSession();
-ArrayList<QuestionAndAnswers> list = (ArrayList<QuestionAndAnswers>) ssn.getAttribute("QuestionAndAnswers");
-request.setAttribute("questions", list);
+ArrayList<QuestionAndAnswers> list = (ArrayList<QuestionAndAnswers>)session.getAttribute("QuestionAndAnswers");
 %>
 <body>
 	<form action=SubmitController method="post" align="center">
-	<select name="question">
-	<c:forEach question="${questionName}" var="id">
-	<option value="${id}">${id}</option>
-	</c:forEach>
-	</select>
+	<%for(QuestionAndAnswers qa: list){
+		%>
+		<h4><%= qa.getQuestion()%>?</h4>
+		<input type="radio" name="<%=qa.getQuestionId() %>" id=<%=qa.getAnswer1() %> value="<%=qa.getAnswer1()%>" />
+		<label><%= qa.getAnswer1()%></label><br>
+		<input type="radio" name="<%=qa.getQuestionId() %>" id=<%=qa.getAnswer2() %> value="<%=qa.getAnswer2()%>" />
+		<label><%= qa.getAnswer2()%></label><br>
+		<input type="radio" name="<%=qa.getQuestionId() %>" id=<%=qa.getAnswer3() %> value="<%=qa.getAnswer3()%>" />
+		<label><%= qa.getAnswer3()%></label><br>
+	<% }%>
 	
-
+	<input type="submit"/>
 	</form>
 </body>
 </html>
