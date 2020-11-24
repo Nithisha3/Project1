@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.cg.model.ClaimAdjuster;
+
 import repositry.Claim;
 import repositry.IClaim;
 
@@ -33,15 +35,22 @@ public class ClaimViewController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+    
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String option=request.getParameter("name");
-		String claimId=request.getParameter("Claim-Id:");
-			if(option.equals("Enter")) {
-				RequestDispatcher rd=request.getRequestDispatcher("Claimview2.jsp");
+		IClaim claim=new Claim();
+		String claimId=request.getParameter("claimId");
+		//System.out.println("CLAIMID : ------------- " + claimId);
+			RequestDispatcher rd=request.getRequestDispatcher("Claimview2.jsp");
+				try {
+					ClaimAdjuster cl = claim.getClaim(claimId);
+					System.out.println(cl);
+					request.setAttribute("claimDetails", cl);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				rd.forward(request, response);
-	}
-			
-			
-			}
+		}
 	
 }
