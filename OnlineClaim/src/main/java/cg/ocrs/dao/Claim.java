@@ -27,7 +27,7 @@ public class Claim implements IClaim {
 	@Override
 	public ClaimAdjuster addClaim(ClaimAdjuster cl) throws SQLException {
 		// TODO Auto-generated method stub
-		psmt = con.prepareStatement("insert into claim values(?,?,?,?,?,?,?)");
+		psmt = con.prepareStatement("insert into claim values(?,?,?,?,?,?,?,?)");
 		psmt.setString(1, cl.getClaimId());
 		psmt.setString(2, cl.getClaimReason());
 		psmt.setString(3, cl.getClaimLocation());
@@ -35,17 +35,20 @@ public class Claim implements IClaim {
 		psmt.setString(5, cl.getClaimCity());
 		psmt.setInt(6, cl.getClaimZip());
 		psmt.setString(7, cl.getClaimType());
+		psmt.setInt(8, cl.getClaimNumber());
 		psmt.executeUpdate();
 		return cl;
 	}
 
 	@Override
 	public ClaimAdjuster getClaim(String claimId) throws SQLException {
-		psmt = con.prepareStatement("select Location,City from claim where claimId=?");
+		psmt = con.prepareStatement("select * from claim where claimId=?");
 		psmt.setString(1, claimId);
 		rsUser = psmt.executeQuery();
 		ClaimAdjuster ca = new ClaimAdjuster();
 		while (rsUser.next()) {
+			System.out.println("CLAIMID -----------"+rsUser.getString("claimid"));
+			ca.setClaimId(rsUser.getString("claimid"));
 			ca.setClaimReason(rsUser.getString("claimReason"));
 			ca.setClaimLocation(rsUser.getString("Location"));
 			ca.setClaimState(rsUser.getString("State"));
@@ -56,40 +59,26 @@ public class Claim implements IClaim {
 		}
 		return ca;
 	}
-public int getQuestionName(String questionName) throws SQLException{
-int id=0;
-psmt=con.prepareStatement("select * from question where questionName=?");
-psmt.setString(2, questionName);
-rsUser=psmt.executeQuery();
-QuestionAndAnswers qa=new QuestionAndAnswers();
-while(rsUser.next()) {
-	if(qa.getQuestion().equalsIgnoreCase("questionName")) {
-		id=qa.getQuestionId();
-	}
-}
-	return id;
 	
-}
 	@Override
-	public ArrayList<QuestionAndAnswers> getQuestionAndAnswers(int questionId) throws SQLException {
-		psmt = con.prepareStatement("select * from question");
+	public ArrayList<QuestionAndAnswers> getQuestionAndAnswers() throws SQLException {
+		psmt = con.prepareStatement("select * from questionandanswers");
 		ArrayList<QuestionAndAnswers> list = new ArrayList<QuestionAndAnswers>();
 		rsUser = psmt.executeQuery();
 		while (rsUser.next()) {
 			QuestionAndAnswers qa = new QuestionAndAnswers();
-			qa.setQuestion(rsUser.getString("question"));
 			qa.setQuestionId(rsUser.getInt("questionId"));
-			PreparedStatement ps = con.prepareStatement("select * from answer where questionid = ?");
-			ps.setInt(1, rsUser.getInt("questionId"));
-			ResultSet rs = ps.executeQuery();
-			ArrayList<String> answers = new ArrayList<String>();
-			while (rs.next()) {
-				String ans = rs.getString("answer");
-				answers.add(ans);
-			}
-			qa.setAnswers(answers);
+			qa.setQuestion(rsUser.getString("question"));
+			qa.setAnswer1(rsUser.getString("answer1"));
+			qa.setAnswer2(rsUser.getString("answer2"));
+			qa.setAnswer3(rsUser.getString("answer3"));
+			qa.setWeightage1(rsUser.getInt("weightage1"));
+			qa.setWeightage2(rsUser.getInt("weightage2"));
+			qa.setWeightage3(rsUser.getInt("weightage3"));
 			list.add(qa);
 		}
 		return list;
 	}
+	
+	
 }
