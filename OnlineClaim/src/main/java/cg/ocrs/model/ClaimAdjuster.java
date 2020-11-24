@@ -1,25 +1,33 @@
 package com.cg.model;
 
 	public class ClaimAdjuster {
+		
 		@Override
 		public String toString() {
-			return "ClaimAdjuster: claimId=" + claimId + ", claimReason=" + claimReason + ", claimLocation="
-					+ claimLocation + ", claimCity=" + claimCity + ", claimState=" + claimState + ", claimZip="
-					+ claimZip +"ClaimType=" +claimType;
+			return "ClaimAdjuster [userId=" + userId + ", claimId=" + claimId + ", claimReason=" + claimReason
+					+ ", claimLocation=" + claimLocation + ", claimCity=" + claimCity + ", claimState=" + claimState
+					+ ", claimZip=" + claimZip + ", claimType=" + claimType + ", claimNumber=" + claimNumber + "]";
 		}
 		private int userId;
-		private int claimId;
+		private String claimId;
 		private String claimReason;
 		private String claimLocation;
 		private String claimCity;
 		private String claimState;
 		private int claimZip;
 		private String claimType;
-	
+		private int claimNumber;
+		
+		public int getClaimNumber() {
+			return claimNumber;
+		}
+		public void setClaimNumber(int claimNumber) {
+			this.claimNumber = claimNumber;
+		}
 		public ClaimAdjuster() {
 			super();
 		}
-		public ClaimAdjuster(int claimId, String claimReason, String claimLocation, String claimState, String claimCity,int claimZip,String claimType) {
+		public ClaimAdjuster(String claimId, String claimReason, String claimLocation, String claimState, String claimCity,int claimZip,String claimType) {
 			super();
 			this.claimId=claimId;
 			this.claimReason=claimReason;
@@ -37,10 +45,10 @@ package com.cg.model;
 		public void setUserId(int userId) {
 			this.userId = userId;
 		}
-		public int getClaimId() {
+		public String getClaimId() {
 			return claimId;
 		}
-		public void setClaimId(int claimId) {
+		public void setClaimId(String claimId) {
 			this.claimId = claimId;
 		}
 		public String getClaimReason() {
@@ -81,8 +89,5 @@ package com.cg.model;
 		}
 
 		}
-
-
-
 
 
