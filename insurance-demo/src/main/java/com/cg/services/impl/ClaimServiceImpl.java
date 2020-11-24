@@ -38,16 +38,30 @@ public class ClaimServiceImpl implements ClaimService {
 		boolean status = claimDao.insertClaimQuestionsAndAnswers(claimQuestionsAndAnswersList);
 		return status;
 	}
-	@Override
-	public Claim viewClaim(String claimNo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 	
 	@Override
 	public HashMap<Questions, ArrayList<Answers>> getClaimQuestionAndAnswers() {
 		HashMap<Questions, ArrayList<Answers>> questionAnswerMap = claimQuestionDao.getClaimquestionsandAnswers();
 		return questionAnswerMap;
+	}
+
+	@Override
+	public Claim viewClaimDetailsForInsuredAndHandler(int claimId, String userName) {
+		Claim claim = claimDao.viewClaimDetailsForInsuredAndHandler(claimId,userName) ;
+		return claim;
+	}
+
+	@Override
+	public Claim viewClaimDetailsForAdjuster(int claimId) {
+		Claim claim = claimDao.viewClaimDetailsForAdjuster(claimId);
+		return claim;
+	}
+
+	@Override
+	public HashMap<Questions, Answers> viewClaimQuestionsAndAnswers(int claimId) {
+		HashMap<Questions, Answers> cHashMap = claimDao.viewClaimQuestionsAndAnswers(claimId);
+		return cHashMap;
 	}
 
 }

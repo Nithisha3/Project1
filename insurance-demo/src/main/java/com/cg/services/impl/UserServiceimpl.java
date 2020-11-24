@@ -21,7 +21,14 @@ public class UserServiceimpl implements UserService {
 
 	@Override
 	public boolean login(UserRole user) {
-		boolean status = userDao.validateUser(user);
+		status = userDao.validateUser(user);
+		return status;
+	}
+
+
+	@Override
+	public boolean addUser(UserRole userRole) {
+		status = userDao.addUser(userRole);
 		return status;
 	}
 

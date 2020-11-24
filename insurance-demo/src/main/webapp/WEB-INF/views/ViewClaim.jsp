@@ -1,6 +1,7 @@
+<%@page import="com.cg.entity.Policy"%>
 <%@page import="com.cg.entity.UserRole"%>
-<%@page import="com.cg.entity.Accounts"%>
-<%@page import="java.util.*"%>
+<%@page import="com.cg.entity.Claim"%>
+<%@ page import="java.util.*" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -10,7 +11,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Insured Success</title>
+		<title>Login Success</title>
 		<!-- Bootstrap -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link href="css/bootstrap.css" rel="stylesheet">
@@ -23,7 +24,7 @@
 	<body>
 		<%
 			UserRole user = (UserRole)session.getAttribute("USER_DATA");
-		ArrayList<Accounts> accountsList = (ArrayList)session.getAttribute("CUSTOMERS_OF_HANDLER");
+			Claim claim = (Claim)session.getAttribute("VIEW_CLAIM_DATA");
 		%>
 		<!-- HEADER STARTS -->
 		<div class ="container-fluid">
@@ -34,9 +35,9 @@
 				</div>
 			
 				<div class = "col-md-2 text-right">
-				<div class = "col-md-5 text-right ">
-						<input type = "button" value  = "view claim" class ="button" data-toggle="modal"  data-target="#viewClaimModal"/>
-				</div>
+				<div class = "col-md-11 ">
+						<input type = "button" value  = "view All claim" class ="button" data-toggle="modal"  data-target="#viewClaimModal"/>
+					 </div>
 					<div class = "col-md-5 text-right">
 						<input type = "button" value  = "logout" class ="button" onclick="location.href ='link?type=logout';"/>
 					 </div>
@@ -53,81 +54,64 @@
 			<p>Welcome to CG Insurance Claim System </p> 
 		</div>
 		
-		</div>
-		
 					<div class="container">
-						<h2>Table</h2>
 						  <div class="table-responsive">          
 						  <table class="table">
 						    <thead>
 						      <tr>
-						        <th>Account Number</th>
-						        <th>Click to View Customer</th>
+						        <th>Claim Id</th>
+						        <th>Reason</th>
+						        <th>Accident Location</th>
+						        <th>Accident State</th>
+						        <th>Accident City</th>
+						        <th>Accident Zip</th>
+						        <th>Claim Type</th>
+						        <th>Policy No</th>  
+				<%
+				if(user.getRoleCode().equals("ADJUSTER")) {
+				%>		   
+								<th>Generate Report</th>  
+				<%
+				}
+				%>     
 						      </tr>
 						    </thead>	
-			
-		<%
-			for(Accounts accounts: accountsList) {
-		%>  
+	
 						    <tbody>
 						      <tr>
-						        <td><%= accounts.getAccountNumber() %></td>
-						        <td>
-								      <form action ="viewUserredirect" method = "post">
+						        <td><%= claim.getClaimNumber() %></td>
+						        <td><%= claim.getClaimReason() %></td>
+						        <td><%= claim.getaccidentLocationStreet() %></td>
+						        <td><%= claim.getAccidentState() %></td>
+						       	<td><%= claim.getAccidentCity() %></td>
+						       	<td><%= claim.getAccidentZip() %></td>
+						       	<td><%= claim.getClaimType() %></td>
+						       	<td><%= claim.getPolicyNumber() %></td>
+				 <%
+					if(user.getRoleCode().equals("ADJUSTER")) {
+				%>		   	<td>
+								 <form action ="genrateReport" method = "post">
 											 <div class ="col-md-10 ">
-												<input type = "hidden" class="form-control input-lg"  name = "accNo" value=<%=accounts.getAccountNumber() %>>
+												<input type = "hidden" class="form-control input-lg"  name = "claimId" value=<%=claim.getClaimNumber() %>>
 											</div>
 											
 								 			<div class = "col-md-6 ">
-								 				<input type = "submit" value = "view customer" class = "button">
+								 				<input type = "submit" value = "Generate Report " class = "button">
 								 			</div>
-								 		</form>
-						        </td>
+								 		</form>  
+								 </td>
+				<%
+				}
+				%> 	
+						      
 						      </tr>
 						    </tbody>
-						
-						 
-		<% 			
-			}
-		%>
 		  </table>
 		 </div>
 	</div>
-	
-	<!-- VIEW CLAIM  Modal -->
-		<div class="modal fade" id="viewClaimModal" >
-			<div class="modal-dialog" role="document">
-				<div id = "myModal" class="modal-content">
-			  		<div class="modal-header">
-						<h3 class="modal-title" id="personalModalLongTitle">Please Enter Valid Claim ID</h3>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					  		<span aria-hidden="true">&times;</span>
-						</button>
-			  		</div>
-			  		<div class="modal-body">
-			  			<div class ="container-fluid">
-							<div class  = "row">
-								<form action ="viewClaim" method = "post">
-									<div class ="col-md-10 ">
-										<B>Claim Id :</B><input type = "text" class="form-control input-lg"  name = "claimId">
-									</div>
-									<div class ="col-md-10 ">
-												<input type = "hidden" class="form-control input-lg"  name = "userName" value=<%=user.getUserName() %>>
-											</div>
-									<div class ="col-md-10 ">
-												<input type = "hidden" class="form-control input-lg"  name = roleCode value=<%=user.getRoleCode() %>>
-									</div>		
-						 			<div class = "col-md-6 ">
-						 				<input type = "submit" value = "Show Polices" class = "button">
-						 			</div>
-						 		</form>
-							</div>
-						 </div>			
-			   		</div>
-		     	</div>
-	      	</div>
-	    </div>
 				
+	
+		 
 		
 		<!-- FOOTER STARTS-->
 		<div class="container-fluid navbar-fixed-bottom">

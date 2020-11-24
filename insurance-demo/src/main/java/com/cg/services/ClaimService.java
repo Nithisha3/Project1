@@ -14,8 +14,12 @@ public interface ClaimService {
 	
 	boolean insertClaimQuestionsAndAnswers(ArrayList<ClaimQuestionsAndAnswers> claimQuestionsAndAnswersList);
 	
-	Claim viewClaim(String claimNo);
-	
 	HashMap<Questions, ArrayList<Answers>> getClaimQuestionAndAnswers();
+	
+	 Claim viewClaimDetailsForInsuredAndHandler(int claimId, String userName) ;
+	 
+	 Claim viewClaimDetailsForAdjuster(int claimId);
+	 
+	 HashMap<Questions, Answers> viewClaimQuestionsAndAnswers(int claimId);
 
 }

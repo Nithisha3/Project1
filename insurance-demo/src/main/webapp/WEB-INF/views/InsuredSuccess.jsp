@@ -34,6 +34,9 @@
 				</div>
 			
 				<div class = "col-md-2 text-right">
+				<div class = "col-md-5 text-right ">
+						<input type = "button" value  = "view claim" class ="button" data-toggle="modal"  data-target="#viewClaimModal"/>
+				</div>
 					<div class = "col-md-5 text-right">
 						<input type = "button" value  = "logout" class ="button" onclick="location.href ='link?type=logout';"/>
 					 </div>
@@ -50,8 +53,8 @@
 			<p>Welcome to CG Insurance Claim System </p> 
 		</div>
 		
+		
 					<div class="container">
-						<h2>Table</h2>
 						  <div class="table-responsive">          
 						  <table class="table">
 						    <thead>
@@ -92,6 +95,40 @@
 		  </table>
 		 </div>
 	</div>
+	
+	<!-- VIEW CLAIM  Modal -->
+		<div class="modal fade" id="viewClaimModal" >
+			<div class="modal-dialog" role="document">
+				<div id = "myModal" class="modal-content">
+			  		<div class="modal-header">
+						<h3 class="modal-title" id="personalModalLongTitle">Please Enter Valid Claim ID</h3>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					  		<span aria-hidden="true">&times;</span>
+						</button>
+			  		</div>
+			  		<div class="modal-body">
+			  			<div class ="container-fluid">
+							<div class  = "row">
+								<form action ="viewClaim" method = "post">
+									<div class ="col-md-10 ">
+										<B>Claim Id :</B><input type = "text" class="form-control input-lg"  name = "claimId">
+									</div>
+									<div class ="col-md-10 ">
+												<input type = "hidden" class="form-control input-lg"  name = "userName" value=<%=user.getUserName() %>>
+									</div>
+									<div class ="col-md-10 ">
+												<input type = "hidden" class="form-control input-lg"  name = roleCode value=<%=user.getRoleCode() %>>
+									</div>
+						 			<div class = "col-md-6 ">
+						 				<input type = "submit" value = "Show Polices" class = "button">
+						 			</div>
+						 		</form>
+							</div>
+						 </div>			
+			   		</div>
+		     	</div>
+	      	</div>
+	    </div>
 				
 	
 		 

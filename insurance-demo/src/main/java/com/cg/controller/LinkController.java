@@ -14,8 +14,12 @@ public class LinkController {
 
 		if(actionValue.equals("logout")) {
 			return "Logout";
-		} else if(actionValue.equals("home")) {
+		} else if(actionValue.equals("insuredHome")) {
 			return "InsuredSuccess";
+		} else if(actionValue.equals("handlerHome")) {
+			return "HandlerSuccess";
+		} else if(actionValue.equals("adjusterHome")) {
+			return "AdjusterSuccess";
 		} else if(actionValue.equals("generateReport")) {
 			 return "claimReport";
 		}

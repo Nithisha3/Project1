@@ -44,8 +44,8 @@
 			<!-- FOOTER STARTS -->
 			<div class="container-fluid navbar-fixed-bottom">
 				<div class = "row footer">
-					<div class ="col-md-9">Flipkart</div>
-					<div class = "col-md-3 text-right">&copy;2017 FlipKart. All Rights Reserved</div>
+					<div class ="col-md-9">CG Insurance Claim System</div>
+					<div class = "col-md-3 text-right">&copy;2017 CG Insurance Claim System. All Rights Reserved</div>
 				</div>
 			</div>
 			<!-- FOOTER ENDS -->

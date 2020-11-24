@@ -34,7 +34,9 @@ public class UserLoginController {
 	
 	//METHOD WHICH CALLS METHOD IN SERVICE PACKAGE TO VALIDATE THE USER WHEN SIGNING IN.
 		@RequestMapping(value= "/login", method = RequestMethod.POST)
-		public String loginProcess(@RequestParam String mail, @RequestParam String pwd, HttpSession ses) {
+		public String loginProcess(@RequestParam String mail,
+				@RequestParam String pwd, 
+				HttpSession ses) {
 
 			UserRole user = new UserRole();
 			user.setUserName(mail);
@@ -48,25 +50,33 @@ public class UserLoginController {
 					Accounts accounts = accountsService.getAccountDetails(user.getUserName());
 					
 					ArrayList<Policy> policyList = policyService.getPolicyDetails(accounts.getAccountNumber());
-					ses.setAttribute("POLICY_DATA", policyList);
 					
-					return "InsuredSuccess";
+					if(!policyList.isEmpty()) {
+						ses.setAttribute("POLICY_DATA", policyList);
+						return "InsuredSuccess";
+					} else  {
+						return "InsuredFailure";
+					}
 				} else if(user.getRoleCode().equals("HANDLER")) {
 					ArrayList<Accounts> accountsList = accountsService.getAccountDetailsforHandler(user.getUserName());
-					System.out.println(accountsList);
-					ses.setAttribute("CUSTOMERS_OF_HANDLER", accountsList);
 					
-					return "HandlerSuccess";
+					if(!accountsList.isEmpty()) {
+						ses.setAttribute("CUSTOMERS_OF_HANDLER", accountsList);
+						return "HandlerSuccess";
+					} else  {
+						return "HandlerFailure";
+					}
 					
 				} else if(user.getRoleCode().equals("ADJUSTER")) {
 					
 					return "AdjusterSuccess";
 					
 				}
-			}
+			} 
 				
-			return "LoginFailure";	
-			
+				return "LoginFailure";	
 		}
+			
+		
 
 }

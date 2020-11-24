@@ -1,4 +1,5 @@
 <%@page import="com.cg.entity.Claim"%>
+<%@page import="com.cg.entity.UserRole"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="ISO-8859-1"%>
@@ -20,6 +21,7 @@
 	<!-- BODY STARTS -->
 	<body>
 		<%	
+		UserRole user = (UserRole)session.getAttribute("USER_DATA");
 			 Claim claim = (Claim)session.getAttribute("CLAIM_DATA");
 			
 		%>
@@ -30,9 +32,29 @@
 					<div class ="col-md-4 col-md-offset-2 text1">
 							Welcome 
 					</div>
+					<%
+					if(user.getRoleCode().equals("INSURED")) {
+					%>
 					<div class = "col-md-5 text-right">
-						<input type = "button" value  = "home" class ="button" onclick="location.href ='link?type=home';"/>
+						<input type = "button" value  = "home" class ="button" onclick="location.href ='link?type=insuredHome';"/>
 					 </div>
+					 <%
+					 } else if(user.getRoleCode().equals("HANDLER")) {
+					%>
+					
+					<div class = "col-md-5 text-right">
+						<input type = "button" value  = "home" class ="button" onclick="location.href ='link?type=handlerHome';"/>
+					 </div>
+					  <%
+					 } else if(user.getRoleCode().equals("ADJUSTER")) {
+					%>
+					
+					<div class = "col-md-5 text-right">
+						<input type = "button" value  = "home" class ="button" onclick="location.href ='link?type=adjusterHome';"/>
+					 </div>
+					 <%
+					 }
+					 %>
 					<div class = "col-md-5 text-right">
 						<input type = "button" value  = "logout" class ="button" onclick="location.href ='link?type=logout';"/>
 					 </div>

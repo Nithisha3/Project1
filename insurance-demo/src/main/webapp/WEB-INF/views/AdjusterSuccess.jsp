@@ -22,7 +22,7 @@
 	<!-- BODY STARTS -->
 	<body>
 		<%
-			//UserRole user = (UserRole)session.getAttribute("USER_DATA");
+			UserRole user = (UserRole)session.getAttribute("USER_DATA");
 			//ArrayList<Accounts> accountsList = (ArrayList)session.getAttribute("CUSTOMERS_OF_HANDLER");
 		%>
 		<!-- HEADER STARTS -->
@@ -58,14 +58,14 @@
 						<input type = "button" value  = "craete user role" class ="button" data-toggle="modal"  data-target="#createUserRoleModal"/>
 					 </div>
 					  <div class = "col-md-11 ">
-						<input type = "button" value  = "Generate Report" class ="button" onclick="location.href ='link?type=generateReport';"/>
+						<input type = "button" value  = "Generate Report" class ="button" data-toggle="modal"  data-target="#generateReportModal"/>
 					 </div>
 			</div>
 	
 		
 		
 		<!-- MODAL LOGICS -->
-		<!-- SIGNIN Modal -->
+		<!-- CREATE CLAIM  Modal -->
 		<div class="modal fade" id="createClaimModal" >
 			<div class="modal-dialog" role="document">
 				<div id = "myModal" class="modal-content">
@@ -81,6 +81,40 @@
 								<form action ="createClaimByAdjuster" method = "post">
 									<div class ="col-md-10 ">
 										<B>Account Number :</B><input type = "text" class="form-control input-lg"  name = "accNo">
+									</div>
+						 			<div class = "col-md-6 ">
+						 				<input type = "submit" value = "Show Polices" class = "button">
+						 			</div>
+						 		</form>
+							</div>
+						 </div>			
+			   		</div>
+		     	</div>
+	      	</div>
+	    </div>
+	    
+	    <!-- VIEW CLAIM  Modal -->
+		<div class="modal fade" id="viewClaimModal" >
+			<div class="modal-dialog" role="document">
+				<div id = "myModal" class="modal-content">
+			  		<div class="modal-header">
+						<h3 class="modal-title" id="personalModalLongTitle">Please Enter Valid Claim ID</h3>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					  		<span aria-hidden="true">&times;</span>
+						</button>
+			  		</div>
+			  		<div class="modal-body">
+			  			<div class ="container-fluid">
+							<div class  = "row">
+								<form action ="viewClaim" method = "post">
+									<div class ="col-md-10 ">
+										<B>Claim Id :</B><input type = "text" class="form-control input-lg"  name = "claimId">
+									</div>
+									<div class ="col-md-10 ">
+												<input type = "hidden" class="form-control input-lg"  name = userName value=<%=user.getUserName() %>>
+									</div>
+									<div class ="col-md-10 ">
+												<input type = "hidden" class="form-control input-lg"  name = roleCode value=<%=user.getRoleCode() %>>
 									</div>
 						 			<div class = "col-md-6 ">
 						 				<input type = "submit" value = "Show Polices" class = "button">
@@ -119,8 +153,8 @@
 										</p>
 									</div>
 									<div class=" col-md-11">
-										<p>Claim type:</p>
-										<select name = "userRole" id = "userRole"  class="form-control input-lg" required>
+										<p>Role Code:</p>
+										<select name = "roleCode" id = "roleCode"  class="form-control input-lg" required>
 												<option value = "INSURED">INSURED</option>
 												<option value = "HANDLER">HANDLER</option>
 												<option value = "ADJUSTER">ADJUSTER</option>
@@ -128,6 +162,34 @@
 									</div>
 						 			<div class = "col-md-6 ">
 						 				<input type = "submit" value = "Login" class = "button">
+						 			</div>
+						 		</form>
+							</div>
+						 </div>			
+			   		</div>
+		     	</div>
+	      	</div>
+	    </div>
+	    
+	     <!-- VIEW CLAIM  Modal -->
+		<div class="modal fade" id="generateReportModal" >
+			<div class="modal-dialog" role="document">
+				<div id = "myModal" class="modal-content">
+			  		<div class="modal-header">
+						<h3 class="modal-title" id="personalModalLongTitle">Please Enter Valid Claim ID</h3>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					  		<span aria-hidden="true">&times;</span>
+						</button>
+			  		</div>
+			  		<div class="modal-body">
+			  			<div class ="container-fluid">
+							<div class  = "row">
+								<form action =genrateReport method = "post">
+									<div class ="col-md-10 ">
+										<B>Claim Id :</B><input type = "text" class="form-control input-lg"  name = "claimId">
+									</div>
+						 			<div class = "col-md-6 ">
+						 				<input type = "submit" value = "Show Polices" class = "button">
 						 			</div>
 						 		</form>
 							</div>
