@@ -72,14 +72,5 @@ public class ClaimController extends HttpServlet {
 
 	}
 
-	/*protected void viewStudent(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException, SQLException {
-		int questionId = Integer.parseInt(request.getParameter("questionId"));
-		IClaim claim = new Claim();
-		claim.getQuestionAndAnswers(questionId);
-		HttpSession ssn = request.getSession();
-		ssn.setAttribute("claim", claim);
-		response.sendRedirect("ClaimNumber.jsp");
-	}*/
-
+	
 }
