@@ -30,8 +30,7 @@ public class ClaimDao extends Dao{
 			ResultSet rs = null;
 			
 			try {
-				
-				System.out.println(claim);
+			
 				psmt=con.prepareStatement("insert into claim values(?,?,?,?,?,?,?,?,?)");
 				psmt.setInt(1,claim.getClaimId());
 				psmt.setInt(2, 0);

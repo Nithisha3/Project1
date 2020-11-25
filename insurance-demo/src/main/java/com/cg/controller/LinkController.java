@@ -20,9 +20,7 @@ public class LinkController {
 			return "HandlerSuccess";
 		} else if(actionValue.equals("adjusterHome")) {
 			return "AdjusterSuccess";
-		} else if(actionValue.equals("generateReport")) {
-			 return "claimReport";
-		}
+		} 
 		return " ";
 	}	
 }

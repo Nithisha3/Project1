@@ -84,17 +84,18 @@
 									<h4><B><p> <%=questions.getQuestion() %></p></B></h4>							
 								</td>
 									 <div class ="col-md-10 ">
-										<input type = "hidden" class="form-control input-lg"  name = "questionId<%=questionLength-- %>" value= <%=questions.getQuestionId() %>>
+										<input type = "hidden" class="form-control input-lg"  name = "count<%=questionLength %>" value= <%=questions.getQuestionId() %>>
 									</div>
+				
 								<td>
 									<%
-									
+									questionLength--;
 									for(Answers answers : ansArrayList) {
 									
 									%>
 									
 								    <div class="col-sm-10">
-								            <input class="form-check-input" type="radio" name=<%=questions.getQuestionId() %> id=<%=answers.getAnswerId() %> value=<%= answers.getAnswerId()%>:<%=answers.getWeightage() %>>
+								            <input class="form-check-input" type="radio" name=<%=questions.getQuestionId() %>  value=<%= answers.getAnswerId()%>:<%=answers.getWeightage() %>>
 								            <label class="form-check-label" for="inlineRadio1"><%= answers.getAnswer() %></label>
 								        </div>
 								      </div>

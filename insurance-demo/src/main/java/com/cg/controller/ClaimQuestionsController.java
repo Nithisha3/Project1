@@ -44,12 +44,12 @@ public class ClaimQuestionsController {
 		for(int i = questionLength; i > 0; i-- ) {
 			ClaimQuestionsAndAnswers claimQuestionsAndAnswers = new ClaimQuestionsAndAnswers();
 			
-			String paramName = "questionId" + i;
+			String paramName = "count" + i;
 			String questionId = request.getParameter(paramName);
 			String answerFromReq = request.getParameter(questionId);
+			
 			String answerId = answerFromReq.split(":")[0];
 			int weightage = Integer.parseInt(answerFromReq.split(":")[1]);
-			
 			totalWeightage = weightage + totalWeightage;
 			
 			claimQuestionsAndAnswers.setQuestionId(Integer.parseInt(questionId));

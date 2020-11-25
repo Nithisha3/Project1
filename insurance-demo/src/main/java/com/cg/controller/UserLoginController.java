@@ -3,8 +3,10 @@ package com.cg.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpSession;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,8 @@ import com.cg.services.UserService;
 
 @Controller
 public class UserLoginController {
+	/* Get actual class name to be printed on */
+	private static Logger log = Logger.getLogger(UserLoginController.class.getName());
 	UserService userService;
 	AccountsService accountsService;
 	PolicyService policyService;
@@ -37,15 +41,19 @@ public class UserLoginController {
 		public String loginProcess(@RequestParam String mail,
 				@RequestParam String pwd, 
 				HttpSession ses) {
+			final String METHOD_NAME = "loginProcess";
+			log.info("Entered the method" + METHOD_NAME);
 
 			UserRole user = new UserRole();
 			user.setUserName(mail);
 			user.setPassword(pwd);
 			
 			boolean status = userService.login(user);
+			log.info("The User login Validation is" + status);
 			
 			if(status) {
 				ses.setAttribute("USER_DATA", user);
+				log.info("The logged in user is " + user.getUserName() + " role code is " + user.getRoleCode());
 				if(user.getRoleCode().equals("INSURED")) {
 					Accounts accounts = accountsService.getAccountDetails(user.getUserName());
 					
@@ -53,8 +61,11 @@ public class UserLoginController {
 					
 					if(!policyList.isEmpty()) {
 						ses.setAttribute("POLICY_DATA", policyList);
+						log.info("The returned page on success is InsuredSuccess.jsp " );
 						return "InsuredSuccess";
 					} else  {
+						log.info("The returned page on failure is InsuredFailure.jsp " );
+
 						return "InsuredFailure";
 					}
 				} else if(user.getRoleCode().equals("HANDLER")) {
@@ -62,18 +73,24 @@ public class UserLoginController {
 					
 					if(!accountsList.isEmpty()) {
 						ses.setAttribute("CUSTOMERS_OF_HANDLER", accountsList);
+						log.info("The returned page on failure is HandlerSuccess.jsp " );
+
 						return "HandlerSuccess";
 					} else  {
+						log.info("The returned page on failure is HandlerFailure.jsp " );
+
 						return "HandlerFailure";
 					}
 					
 				} else if(user.getRoleCode().equals("ADJUSTER")) {
-					
+					log.info("The returned page on failure is AdjusterSuccess.jsp " );
+
 					return "AdjusterSuccess";
 					
 				}
 			} 
-				
+			log.info("The returned page on failure is LoginFailure.jsp " );
+
 				return "LoginFailure";	
 		}
 			
